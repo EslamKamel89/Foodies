@@ -1,30 +1,105 @@
 @import "tailwindcss";
 
-* {
-  box-sizing: border-box;
+/* ================================
+   Design System — Color Tokens
+   ================================ */
+:root {
+  --color-primary: 143 58 9;
+  --color-secondary: 89 69 60;
+  --color-accent: 255 193 7;
+
+  --color-success: 34 197 94;
+  --color-warning: 234 179 8;
+  --color-danger: 239 68 68;
+  --color-info: 59 130 246;
+
+  --color-bg: 40 44 52;
+  --color-surface: 55 59 69;
+  --color-border: 75 85 99;
+
+  --color-text: 243 244 246;
+  --color-muted: 156 163 175;
 }
 
-html {
-  font-family: "Quicksand", sans-serif;
+/* ================================
+   Tailwind Utilities Mapping
+   ================================ */
+@layer utilities {
+  .bg-primary {
+    background-color: rgb(var(--color-primary));
+  }
+  .bg-secondary {
+    background-color: rgb(var(--color-secondary));
+  }
+  .bg-accent {
+    background-color: rgb(var(--color-accent));
+  }
+  .bg-success {
+    background-color: rgb(var(--color-success));
+  }
+  .bg-warning {
+    background-color: rgb(var(--color-warning));
+  }
+  .bg-danger {
+    background-color: rgb(var(--color-danger));
+  }
+  .bg-info {
+    background-color: rgb(var(--color-info));
+  }
+  .bg-surface {
+    background-color: rgb(var(--color-surface));
+  }
+  .bg-app {
+    background-color: rgb(var(--color-bg));
+  }
+
+  .text-primary {
+    color: rgb(var(--color-primary));
+  }
+  .text-secondary {
+    color: rgb(var(--color-secondary));
+  }
+  .text-accent {
+    color: rgb(var(--color-accent));
+  }
+  .text-muted {
+    color: rgb(var(--color-muted));
+  }
+  .text-app {
+    color: rgb(var(--color-text));
+  }
+
+  .border-primary {
+    border-color: rgb(var(--color-primary));
+  }
+  .border-secondary {
+    border-color: rgb(var(--color-secondary));
+  }
+  .border-accent {
+    border-color: rgb(var(--color-accent));
+  }
+  .border-app {
+    border-color: rgb(var(--color-border));
+  }
 }
 
-body {
-  margin: 0;
-  position: relative;
-  background: radial-gradient(#282c34, #282c34);
-}
+/* ================================
+   Base Defaults (NO @apply)
+   ================================ */
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
 
-.header-background {
-  position: absolute;
-  width: 100%;
-  height: 320px;
-  top: 0;
-  left: 0;
-  z-index: -1;
-}
+  html {
+    font-family: "Quicksand", sans-serif;
+  }
 
-svg {
-  display: block;
-  width: 100%;
-  height: auto;
+  body {
+    margin: 0;
+    background-color: rgb(var(--color-bg));
+    color: rgb(var(--color-text));
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }
