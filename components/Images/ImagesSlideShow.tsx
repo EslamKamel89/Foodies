@@ -26,7 +26,7 @@ const ImagesSlideShow: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev < images.length - 1 ? prev + 1 : 0));
-    }, 2200);
+    }, 4000);
     return () => clearInterval(interval);
   }, []);
 
@@ -38,7 +38,7 @@ const ImagesSlideShow: React.FC = () => {
           <div
             key={index}
             className={`
-              absolute transition-all duration-700 ease-out 
+              absolute transition-all duration-900 ease-out 
               ${
                 isActive
                   ? "opacity-100 scale-100 z-20"
@@ -50,8 +50,6 @@ const ImagesSlideShow: React.FC = () => {
               src={m.image}
               alt={m.alt}
               className="object-cover rounded-xl shadow-md"
-              width={500}
-              height={380}
               priority={isActive}
             />
           </div>
