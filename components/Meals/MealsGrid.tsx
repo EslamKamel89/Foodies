@@ -1,13 +1,5 @@
+import { Meal } from "@/initdb";
 import MealItem from "./MealItem";
-
-export type Meal = {
-  id: string;
-  title: string;
-  image: string;
-  creator: string;
-  summary: string;
-  slug: string;
-};
 
 const MealsGrid: React.FC<{ meals: Meal[] }> = ({ meals }) => {
   return (

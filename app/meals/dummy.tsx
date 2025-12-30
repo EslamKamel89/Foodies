@@ -1,4 +1,4 @@
-import { Meal } from "@/components/Meals/MealsGrid";
+import { Meal } from "@/initdb";
 
 export const meals: Meal[] = [
   {

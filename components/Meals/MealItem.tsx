@@ -1,7 +1,7 @@
 // components/Meals/MealItem.tsx
+import { Meal } from "@/initdb";
 import Image from "next/image";
 import Link from "next/link";
-import { Meal } from "./MealsGrid";
 
 const MealItem: React.FC<{ meal: Meal }> = ({
   meal: { image, title, creator, summary, slug },
