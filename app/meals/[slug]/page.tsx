@@ -1,4 +1,3 @@
-// app/meals/[slug]/page.tsx
 import { getMealBySlug } from "@/lib/meals";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,6 +11,7 @@ const MealDetails = async ({ params }: Props) => {
   const meal = await getMealBySlug(slug);
 
   if (!meal) {
+    // return notFound();
     return (
       <div className="text-center space-y-6 mt-24">
         <h2 className="text-3xl font-bold text-accent">Meal Not Found 🍽️</h2>
@@ -27,7 +27,6 @@ const MealDetails = async ({ params }: Props) => {
 
   return (
     <article className="max-w-4xl mx-auto space-y-10">
-      {/* Meal Header */}
       <header className="space-y-4 text-center">
         <h1 className="text-4xl font-bold text-white">{meal.title}</h1>
 
@@ -38,7 +37,6 @@ const MealDetails = async ({ params }: Props) => {
         )}
       </header>
 
-      {/* Image */}
       <div className="relative rounded-xl overflow-hidden shadow-lg border border-white/10">
         <Image
           src={meal.image}
@@ -49,19 +47,18 @@ const MealDetails = async ({ params }: Props) => {
         />
       </div>
 
-      {/* Summary */}
       <section className="text-white/90 leading-relaxed text-center max-w-2xl mx-auto">
         <p>{meal.summary}</p>
       </section>
 
-      {/* Instructions */}
       {meal.instructions && (
         <section className="bg-surface rounded-xl shadow-lg border border-white/10 p-6 space-y-4">
           <h2 className="text-xl font-semibold text-accent">Instructions 🍴</h2>
 
-          <div className="whitespace-pre-line text-white/80 text-sm leading-relaxed">
-            {meal.instructions}
-          </div>
+          <div
+            className="whitespace-pre-line text-white/80 text-sm leading-relaxed"
+            dangerouslySetInnerHTML={{ __html: meal.instructions }}
+          ></div>
 
           {meal.creator_email && (
             <p className="text-muted text-xs">
