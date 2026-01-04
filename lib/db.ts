@@ -5,9 +5,9 @@ export type Meal = {
   slug: string;
   image: string;
   summary: string;
-  instructions?: string;
-  creator?: string;
-  creator_email?: string;
+  instructions?: string | null;
+  creator?: string | null;
+  creator_email?: string | null;
 };
 const dummyMeals: Meal[] = [
   {
