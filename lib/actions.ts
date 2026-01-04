@@ -2,6 +2,7 @@
 import { Meal } from "@/lib/db";
 import { getOptionalFile, getOptionalString, getString } from "@/lib/normalize";
 import { slugify } from "@/lib/slug";
+import { redirect } from "next/navigation";
 import { createMeal } from "./meals";
 import { saveFile } from "./save_file";
 async function getMealFromFormData(form: FormData): Promise<Meal> {
@@ -25,6 +26,6 @@ async function getMealFromFormData(form: FormData): Promise<Meal> {
 }
 export async function shareMeal(formData: FormData) {
   const meal = await getMealFromFormData(formData);
-  console.log(meal);
-  createMeal(meal);
+  await createMeal(meal);
+  redirect("/meals");
 }
