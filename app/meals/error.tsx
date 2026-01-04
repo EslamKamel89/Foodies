@@ -1,4 +1,3 @@
-// app/meals/error.tsx
 "use client";
 
 export default function MealsError({ error }: { error: Error }) {

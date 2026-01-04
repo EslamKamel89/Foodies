@@ -7,7 +7,7 @@ export async function sleep(milliseconds: number) {
   });
 }
 export async function getMeals(): Promise<Meal[]> {
-  await sleep(3000);
+  await sleep(1000);
   // const num = Math.random();
   // if (num > 0.5) {
   //   throw new Error("Couldn't fetch the meals");
@@ -16,7 +16,7 @@ export async function getMeals(): Promise<Meal[]> {
 }
 
 export async function getMealBySlug(slug: string): Promise<Meal | null> {
-  await sleep(3000);
+  await sleep(1000);
   const meal = db.prepare(`SELECT * FROM meals WHERE slug = ?`).get(slug);
   return (meal ?? null) as Meal | null;
 }

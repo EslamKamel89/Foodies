@@ -1,6 +1,5 @@
 import ImagePicker from "@/components/Meals/ImagePicker";
 
-// app/meals/share/page.tsx
 const MealsSharePage = () => {
   return (
     <>

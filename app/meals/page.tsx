@@ -6,7 +6,7 @@ import { Suspense } from "react";
 export const dynamic = "force-static";
 export const revalidate = false;
 
-const MealsPage = async () => {
+const MealsPage = () => {
   return (
     <>
       <header className="text-center space-y-4 mb-16">

@@ -11,7 +11,6 @@ const MealDetails = async ({ params }: Props) => {
   const meal = await getMealBySlug(slug);
 
   if (!meal) {
-    // return notFound();
     return (
       <div className="text-center space-y-6 mt-24">
         <h2 className="text-3xl font-bold text-accent">Meal Not Found 🍽️</h2>
