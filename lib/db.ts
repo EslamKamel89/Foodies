@@ -3,7 +3,7 @@ export type Meal = {
   id?: string;
   title: string;
   slug: string;
-  image: string;
+  image?: string | null;
   summary: string;
   instructions?: string | null;
   creator?: string | null;

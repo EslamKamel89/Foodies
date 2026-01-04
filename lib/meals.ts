@@ -1,4 +1,5 @@
 import sql from "better-sqlite3";
+import xss from "xss";
 import { Meal } from "./db";
 const db = sql("meals.db");
 export async function sleep(milliseconds: number) {
@@ -19,4 +20,22 @@ export async function getMealBySlug(slug: string): Promise<Meal | null> {
   await sleep(1000);
   const meal = db.prepare(`SELECT * FROM meals WHERE slug = ?`).get(slug);
   return (meal ?? null) as Meal | null;
+}
+
+export async function createMeal(meal: Meal) {
+  await sleep(1000);
+  meal.instructions = meal.instructions ? xss(meal.instructions) : null;
+  const stmt = db.prepare(`
+      INSERT INTO meals VALUES (
+         null,
+         @slug,
+         @title,
+         @image,
+         @summary,
+         @instructions,
+         @creator,
+         @creator_email
+      )
+   `);
+  stmt.run(meal);
 }

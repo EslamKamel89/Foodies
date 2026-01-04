@@ -18,3 +18,25 @@ export function getOptionalString(form: FormData, key: string): string | null {
     throw new FormValidationError(key, `${key} must be string`);
   return value.trim() === "" ? null : value.trim();
 }
+export function getFile(form: FormData, key: string): File {
+  const value = form.get(key);
+  if (value == null) {
+    throw new FormValidationError(key, `${key} is required`);
+  }
+  if (!(value instanceof File)) {
+    throw new FormValidationError(key, `${key} must be a valid image`);
+  }
+  if (value.size === 0) {
+    throw new FormValidationError(key, `${key} must be a valid image`);
+  }
+  return value;
+}
+export function getOptionalFile(form: FormData, key: string): File | null {
+  const value = form.get(key);
+  if (value == null) return null;
+  if (!(value instanceof File)) {
+    throw new FormValidationError(key, `${key} must be a valid Image`);
+  }
+  if (value.size === 0) return null;
+  return value;
+}

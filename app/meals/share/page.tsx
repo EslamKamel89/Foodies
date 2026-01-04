@@ -1,5 +1,5 @@
 import ImagePicker from "@/components/Meals/ImagePicker";
-import { shareMeal } from "@/lib/action";
+import { shareMeal } from "@/lib/actions";
 
 const MealsSharePage = () => {
   return (
