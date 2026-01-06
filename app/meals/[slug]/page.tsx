@@ -38,7 +38,7 @@ const MealDetails = async ({ params }: Props) => {
 
       <div className="relative rounded-xl overflow-hidden shadow-lg border border-white/10">
         <Image
-          src={meal.image}
+          src={meal.image ?? ""}
           alt={meal.title}
           width={1000}
           height={600}
