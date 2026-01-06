@@ -28,7 +28,7 @@ const MealsSharePage = () => {
               <input
                 type="text"
                 id="name"
-                name="name"
+                name="creator"
                 className="rounded-lg bg-black/20 text-white px-4 py-2 outline-none border border-white/10 focus:border-accent focus:ring-2 focus:ring-accent transition"
               />
             </p>
@@ -40,7 +40,7 @@ const MealsSharePage = () => {
               <input
                 type="text"
                 id="email"
-                name="email"
+                name="creator_email"
                 className="rounded-lg bg-black/20 text-white px-4 py-2 outline-none border border-white/10 focus:border-accent focus:ring-2 focus:ring-accent transition"
               />
             </p>

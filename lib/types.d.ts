@@ -9,3 +9,6 @@ export type Meal = {
   creator_email?: string | null;
 };
 export type MealError = { [k in keyof Meal]?: string };
+export type MealResult =
+  | { data: meal; errors?: never }
+  | { data?: never; errors: MealError };

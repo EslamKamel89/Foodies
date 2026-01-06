@@ -4,29 +4,42 @@ import { slugify } from "@/lib/slug";
 import { redirect } from "next/navigation";
 import { createMeal } from "./meals";
 import { saveFile } from "./save_file";
-import { Meal, MealError } from "./types";
-async function getMealFromFormData(form: FormData): Promise<Meal> {
+import { Meal, MealError, MealResult } from "./types";
+async function getMealFromFormData(form: FormData): Promise<MealResult> {
   const errors: MealError = {};
-  const title = getString(form, "title");
-  const slug = slugify(title);
-  const file = getOptionalFile(form, "image");
-
+  const title = getString(form, "title", errors);
+  const file = getOptionalFile(form, "image", errors);
+  const summary = getString(form, "summary", errors);
+  const instructions = getString(form, "instructions", errors);
+  const creator = getString(form, "creator", errors);
+  const creator_email = getEmail(form, "creator_email", errors);
+  if (Object.keys(errors).length > 0) {
+    return { errors };
+  }
+  const slug = slugify(title!);
   const meal: Meal = {
     title,
     slug,
-    summary: getString(form, "summary"),
-    instructions: getString(form, "instructions"),
-    creator: getString(form, "name"),
-    creator_email: getEmail(form, "email"),
+    summary,
+    instructions,
+    creator,
+    creator_email,
     image: null,
-  };
-  if (file) {
-    meal.image = await saveFile(file);
+  } as Meal;
+  try {
+    if (file) {
+      meal.image = await saveFile(file);
+    }
+  } catch {
+    return { errors: { image: "Failed to save image" } };
   }
-  return meal;
+  return { data: meal };
 }
 export async function shareMeal(formData: FormData) {
-  const meal = await getMealFromFormData(formData);
-  await createMeal(meal);
+  const result = await getMealFromFormData(formData);
+  if (result.errors) {
+    return;
+  }
+  await createMeal(result.data);
   redirect("/meals");
 }

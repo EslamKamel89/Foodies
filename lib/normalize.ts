@@ -1,61 +1,117 @@
-export class FormValidationError extends Error {
-  constructor(public field: string, public message: string) {
-    super(message);
-  }
-}
+// export class FormValidationError extends Error {
+//   constructor(public errors: Record<string, string>) {
+//     super(JSON.stringify(errors));
+//   }
+// }
 
-export function getString(form: FormData, key: string): string {
+export function getString<T>(
+  form: FormData,
+  key: keyof T,
+  errors: Partial<Record<keyof T, string>>
+): string | null {
+  if (typeof key != "string") {
+    throw Error("key passed to getString must be string");
+  }
   let value = form.get(key);
   if (typeof value != "string") {
-    throw new FormValidationError(key, `${key} is required and must be string`);
+    errors[key] = `${key} is required and must be string`;
+    return null;
   }
   value = value.trim().toLowerCase();
   if (value === "") {
-    throw new FormValidationError(key, `${key} can't be empty`);
-  }
-  return value;
-}
-
-export function getOptionalString(form: FormData, key: string): string | null {
-  let value = form.get(key);
-  if (value == null) return value;
-  if (typeof value != "string") {
-    throw new FormValidationError(key, `${key} must be string`);
-  }
-  value = value.trim().toLowerCase();
-  if (value === "") {
+    errors[key] = `${key} can't be empty`;
     return null;
   }
   return value;
 }
-export function getFile(form: FormData, key: string): File {
+
+export function getOptionalString<T>(
+  form: FormData,
+  key: keyof T,
+  errors: Partial<Record<keyof T, string>>
+): string | null {
+  if (typeof key !== "string") {
+    throw Error("key passed to getOptionalString must be string");
+  }
+
   const value = form.get(key);
-  if (value == null) {
-    throw new FormValidationError(key, `${key} is required`);
-  }
-  if (!(value instanceof File)) {
-    throw new FormValidationError(key, `${key} must be a valid image`);
-  }
-  if (value.size === 0) {
-    throw new FormValidationError(key, `${key} must be a valid image`);
-  }
-  return value;
-}
-export function getOptionalFile(form: FormData, key: string): File | null {
-  const value = form.get(key);
+
   if (value == null) return null;
-  if (!(value instanceof File)) {
-    throw new FormValidationError(key, `${key} must be a valid Image`);
+
+  if (typeof value !== "string") {
+    errors[key] = `${key} must be a string`;
+    return null;
   }
-  if (value.size === 0) return null;
+
+  const trimmed = value.trim().toLowerCase();
+
+  if (trimmed === "") return null;
+
+  return trimmed;
+}
+
+export function getFile<T>(
+  form: FormData,
+  key: keyof T,
+  errors: Partial<Record<keyof T, string>>
+): File | null {
+  if (typeof key !== "string") {
+    throw Error("key passed to getFile must be string");
+  }
+
+  const value = form.get(key);
+
+  if (!(value instanceof File)) {
+    errors[key] = `${key} is required`;
+    return null;
+  }
+
+  if (value.size === 0) {
+    errors[key] = `${key} must be a valid file`;
+    return null;
+  }
+
   return value;
 }
 
-export function getEmail(form: FormData, key: string): string {
-  const email = getString(form, key);
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-    throw new FormValidationError(key, `${key} must be a valid email address`);
+export function getOptionalFile<T>(
+  form: FormData,
+  key: keyof T,
+  errors: Partial<Record<keyof T, string>>
+): File | null {
+  if (typeof key !== "string") {
+    throw Error("key passed to getOptionalFile must be string");
   }
+
+  const value = form.get(key);
+
+  if (value == null) return null;
+
+  if (!(value instanceof File)) {
+    errors[key] = `${key} must be a valid file`;
+    return null;
+  }
+
+  if (value.size === 0) return null;
+
+  return value;
+}
+
+export function getEmail<T>(
+  form: FormData,
+  key: keyof T,
+  errors: Partial<Record<keyof T, string>>
+): string | null {
+  const email = getString<T>(form, key, errors);
+
+  if (!email) return null;
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!emailRegex.test(email)) {
+    errors[key] = `${key as string} must be a valid email address`;
+    return null;
+  }
+
   return email;
 }
